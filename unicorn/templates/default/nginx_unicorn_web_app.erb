@@ -30,6 +30,13 @@ server {
     <% end %>
     try_files $uri/index.html $uri/index.htm @unicorn;
   }
+  
+  location ~ ^/assets/ {
+    expires 1y;
+    add_header Cache-Control public;
+    add_header ETag "";
+    break;
+  }
 
   location @unicorn {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -87,6 +94,13 @@ server {
 
   location / {
     try_files $uri/index.html $uri/index.htm @unicorn;
+  }
+
+  location ~ ^/assets/ {
+    expires 1y;
+    add_header Cache-Control public;
+    add_header ETag "";
+    break;
   }
 
   location @unicorn {
